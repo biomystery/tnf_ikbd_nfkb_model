@@ -1,0 +1,27 @@
+
+# default simulation results 
+1. IkBa: 
+— Shape roughly match (three cycle damped oscillation) 
+- late phase level: data > simulation ; data not reach to basal at 24 hours 
+
+2. IkBb
+- Shape match (rapidly drop and rise) 
+
+- Simulated result is a little faster than data 
+** first 2 hours in simulation but 4 to 6 hour in data) 
+
+3. IkBe 
+- shape match (little dip in first hour and induced) 
+- 4 to 6 hour recovered in data but 2 hr only in simulation 
+
+4. p100
+- dynamics not match 
+** data: gradually increase to the platau; sim: 4hr reached a plateau but keeps up again at 16 hour and then decrease) 
+
+- first 2hour match 
+
+- 2 to 4 hour too rapid in simulation 
+
+
+
+
