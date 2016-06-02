@@ -17,7 +17,7 @@ exp051916.species_unique_no = length(unique(species));
 
 clear tc_data reps tps species;
 
-%% plot the exp051916 data 
+% plot the exp051916 data 
 for i = 1:exp051916.species_unique_no
 subplot(2,2,i)
 idx =find(strcmp(exp051916.species,exp051916.species_unique{i})) ;
@@ -48,10 +48,6 @@ end
 
 
 dose = exp051916.dose ; %ng/ml 
-mod_colormap = jet(length(doses));
-
-%divergingmap(0:1/(length(doses)-1):1,[12 12 77]/255,[158 ...
-%                    4 0]/255);
 
 id.output = {'IkBa','IkBan','IkBb','IkBbn','IkBe','IkBen','IkBd','IkBdn'}; % output names are in getInit.m
 id.DT = 0.05; 
@@ -63,14 +59,14 @@ run_id = id;
 run_id.dose = dose;
 wt_sim = getSimData(run_id);
 
-%%
+%
 sim_data = zeros(size(wt_sim,2),4);
 for i = 1:4
     sim_data(:,i)= (wt_sim(i*2-1,:) + wt_sim(i*2,:))./(wt_sim(i*2-1,1) + wt_sim(i*2,1));
 end
 
 
-%% plot
+% plot
 figure
 for i = 1:exp051916.species_unique_no
 subplot(2,2,i)
@@ -90,5 +86,7 @@ xlabel('Time (h)');ylabel('fold')
 end
 print('./figs/exp051916_sim_default.png','-dpng')
 
+%% manual calibrations 
+% 1. ikba induction is too high 
 
 

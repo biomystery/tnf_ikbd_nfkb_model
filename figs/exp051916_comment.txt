@@ -2,7 +2,11 @@
 # default simulation results 
 1. IkBa: 
 — Shape roughly match (three cycle damped oscillation) 
-- late phase level: data > simulation ; data not reach to basal at 24 hours 
+
+- Late phase level: data > simulation ; data not reach to basal at 24 hours 
+**** probably it is due to much higher fold of induction 
+
+- Induction fold is too high compare to the data (exp: 2.5 folds, data: 20 fold) 
 
 2. IkBb
 - Shape match (rapidly drop and rise) 
@@ -21,6 +25,11 @@
 - first 2hour match 
 
 - 2 to 4 hour too rapid in simulation 
+
+# compare L929 cell vs 3T3 cells 
+1. IkBb basal is 3 fold higher in L, 
+2. p100 basal is about 10 fold less in L 
+3. p100 m
 
 
 
