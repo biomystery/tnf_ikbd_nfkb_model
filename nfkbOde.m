@@ -227,23 +227,22 @@ if v.PHASE == 2 % no delay in phase 1
 end
 
 %% set IKK flux
- if v.PHASE == 1
-     IKK_flux = 0.01; 
-     IKK1_flux = .01; % basal 
- else
-    if v.SET_IKK ==0
-        IKK_flux = IKK/v.IKK_TOTAL; 
-        IKK1_flux = .01; % basal 
-    else
-        [~,b] = size(v.IKK_CURVE);
-        t_range = 0:1:(b-1);
-        IKK_flux = interp1(t_range, v.IKK_CURVE, t);
+if v.PHASE == 1
+    IKK_flux = 0.01;
+    IKK1_flux = .01; % basal
+elseif v.SET_IKK ==0
+    IKK_flux = IKK/v.IKK_TOTAL;
+    IKK1_flux = .01; % basal
+else
+    [~,b] = size(v.IKK_CURVE);
+    t_range = 0:1:(b-1);
+    IKK_flux = interp1(t_range, v.IKK_CURVE, t);
+    
+    [~,b] = size(v.IKK_CURVE1);
+    t_range = 0:1:(b-1);
+    IKK1_flux = interp1(t_range, v.IKK_CURVE1, t);
+end
 
-        [~,b] = size(v.IKK_CURVE1);
-        t_range = 0:1:(b-1);
-        IKK1_flux = interp1(t_range, v.IKK_CURVE1, t);
-    end
- end
 
 
 

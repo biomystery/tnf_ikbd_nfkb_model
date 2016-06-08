@@ -1,3 +1,8 @@
+# experimental data
+1. IkBa quick response (up and down) 
+2. 
+
+
 
 # default simulation results 
 1. IkBa: 
@@ -26,11 +31,39 @@
 
 - 2 to 4 hour too rapid in simulation 
 
+- very weak inducibility (0.025 vs. 8 -ikba; similar to IkBb) 
+
+4a.  why p100 two steps and dropped down 
+- three phases accumulation (fast, slow, fast) 
+- last phase 8hr t1/2 decreasing (probably due to protein decay) 
+
+- its dynamics is slow 
+*** 6 hour mRNA half-life (beta about 4.5hr, ikbet  3hr, ikbat 20 mins) 
+*** 8 hour protein half-life 
+
+
+- delayed 90 mins in Txn 
+
+
 # compare L929 cell vs 3T3 cells 
 1. IkBb basal is 3 fold higher in L, 
 2. p100 basal is about 10 fold less in L 
-3. p100 m
 
 
 
 
+
+# solving the problem 
+
+1. IkBa induction fold is too high in sim. 
+- Txn drop 
+*** ok with fold reduced 
+*** lost drop at 2hr time point 
+*** change fold and platau in IkB epsilon 
+
+- Basal rise 
+
+
+
+2. IkB eps late phase drop (>10hr)
+- probably ok if clear the loading variation due to the cell death  

@@ -39,7 +39,15 @@ if ~isempty(alter)
 end
 
 % Vary n parameters
-alter =       [...
+alter =       [
+    1 3e-4;
+    3 2e-6;
+    6 .2;
+    %72 2e-7;
+    %12 90;
+    %4 0.8; 
+    %10 0;
+    %75 0 ;
     ];
 if ~isempty(alter)
     id.inputvPid = alter(:,1)';
@@ -84,7 +92,7 @@ title(exp051916.species_unique{i})
 set(gca,'xtick',0:120:1440,'xticklabel',(0:120:1440)/60)
 xlabel('Time (h)');ylabel('fold') 
 end
-print('./figs/exp051916_sim_default.png','-dpng')
+print('./figs/exp051916_sim_basalAE_txnE.png','-dpng')
 
 %% manual calibrations 
 % 1. ikba induction is too high 
