@@ -34,7 +34,7 @@ wt_sim = zeros(length(id.output),round(id.sim_time/id.DT)+1, ...
 for idx_d = 1:length(doses)
     run_id = id;
     run_id.dose = doses(idx_d);
-    wt_sim(:,:,idx_d) = getSimData(run_id);
+    [wt_sim(:,:,idx_d),v] = getSimData(run_id);
 end
 
 % plot

@@ -1,4 +1,4 @@
-function simData=getSimData(id)
+function [simData,v] = getSimData(id)
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Construct model information structure and simulate TNF stimulus
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

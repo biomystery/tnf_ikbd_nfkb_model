@@ -228,7 +228,7 @@ end
 
 %% set IKK flux
 if v.PHASE == 1
-    IKK_flux = 0.01;
+    IKK_flux = IKK/v.IKK_TOTAL;
     IKK1_flux = .01; % basal
 elseif v.SET_IKK ==0
     IKK_flux = IKK/v.IKK_TOTAL;

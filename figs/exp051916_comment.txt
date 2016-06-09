@@ -67,3 +67,8 @@
 
 2. IkB eps late phase drop (>10hr)
 - probably ok if clear the loading variation due to the cell death  
+
+# model 
+
+- Werner et al. 2008: 
+* IkK not forming complex but by enzymatic reaction 

@@ -42,7 +42,10 @@ end
 alter =       [
     1 3e-4;
     3 2e-6;
+    5 0.1;
     6 .2;
+    35 0.018; 
+    38 0.018;
     %72 2e-7;
     %12 90;
     %4 0.8; 
@@ -57,7 +60,8 @@ end
 
 dose = exp051916.dose ; %ng/ml 
 
-id.output = {'IkBa','IkBan','IkBb','IkBbn','IkBe','IkBen','IkBd','IkBdn'}; % output names are in getInit.m
+id.output = {'IkBa','IkBan','IkBb','IkBbn','IkBe','IkBen','IkBd','IkBdn',...
+    'NFkBn','IKK'}; % output names are in getInit.m
 id.DT = 0.05; 
 id.sim_time = exp051916.tps(end);
 [n,i] = getRateParams(); % Vary "i" params with id.inputPid/inputP and "n" params with id.inputvPid/inputvP
@@ -65,34 +69,39 @@ id.sim_time = exp051916.tps(end);
 % Simulate
 run_id = id;
 run_id.dose = dose;
-wt_sim = getSimData(run_id);
+[wt_sim,v] = getSimData(run_id);
 
 %
-sim_data = zeros(size(wt_sim,2),4);
+sim_data = zeros(size(wt_sim,2),6);
 for i = 1:4
-    sim_data(:,i)= (wt_sim(i*2-1,:) + wt_sim(i*2,:))./(wt_sim(i*2-1,1) + wt_sim(i*2,1));
+    sim_data(:,i)= (wt_sim(i*2-1,:) + wt_sim(i*2,:))./(wt_sim(i*2-1,1) ...
+        + wt_sim(i*2,1));
 end
+%
+sim_data(:,5:6) = wt_sim(9:10,:)';  
 
-
-% plot
+%% plot
 figure
-for i = 1:exp051916.species_unique_no
-subplot(2,2,i)
-plot(0:id.DT:id.sim_time,sim_data(:,i),'r-','linewidth',1.5)
-hold on 
-plot(0:id.DT:id.sim_time,wt_sim(i*2-1,:)/(wt_sim(i*2-1,1) + wt_sim(i*2,1)),...
-    '--','linewidth',1.5,'color',[255 204 203]/255) % cyto
-plot(0:id.DT:id.sim_time,wt_sim(i*2,:)/(wt_sim(i*2-1,1) + wt_sim(i*2,1)),...
-    '--','linewidth',1.5,'color',[127 63 62]/255) % nuclear
-if(i==1) 
-    legend({'tot','cyto','nuclear'}); 
-end; 
-
-title(exp051916.species_unique{i})
-set(gca,'xtick',0:120:1440,'xticklabel',(0:120:1440)/60)
-xlabel('Time (h)');ylabel('fold') 
+tils.species = {exp051916.species_unique{:},'NFkBn','IKK'}; 
+for i = 1:6
+    subplot(3,2,i)
+    plot(0:id.DT:id.sim_time,sim_data(:,i),'r-','linewidth',1.5)
+    hold on
+    if (i <=4)
+        plot(0:id.DT:id.sim_time,wt_sim(i*2-1,:)/(wt_sim(i*2-1,1) + wt_sim(i*2,1)),...
+            '--','linewidth',1.5,'color',[255 204 203]/255) % cyto
+        plot(0:id.DT:id.sim_time,wt_sim(i*2,:)/(wt_sim(i*2-1,1) + wt_sim(i*2,1)),...
+            '--','linewidth',1.5,'color',[127 63 62]/255) % nuclear
+    end
+    if(i==1)
+        legend({'tot','cyto','nuclear'});
+    end;
+    
+    title(tils.species{i})
+    set(gca,'xtick',0:120:1440,'xticklabel',(0:120:1440)/60)
+    xlabel('Time (h)');ylabel('fold')
 end
-print('./figs/exp051916_sim_basalAE_txnE.png','-dpng')
+print('./figs/exp051916_sim_basalAE_txnBE_degE.png','-dpng')
 
 %% manual calibrations 
 % 1. ikba induction is too high 
