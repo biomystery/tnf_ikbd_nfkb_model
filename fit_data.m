@@ -38,6 +38,21 @@ print('./figs/exp051916.png','-dpng')
 
 %% simulate once
 id = struct;
+
+
+
+dose = exp051916.dose ; %ng/ml 
+
+id.output = {'IkBa','IkBaNFkB','IkBan','IkBaNFkBn',...
+    'IkBb','IkBbNFkB','IkBbn','IkBbNFkBn',...
+    'IkBe','IkBeNFkB','IkBen','IkBeNFkBn',...
+    'IkBd','IkBdNFkB','IkBdn','IkBdNFkBn'...
+    'NFkBn','IKK','a20','IkBat','TNF','IkBbt',...
+    'IkBet','IkBdt','IkBaNFkBn','IkBdNFkBn',...
+    'IKK_off','IKK_i'}; % output names are in getInit.m
+id.DT = 0.05; 
+id.sim_time = exp051916.tps(end);
+
 %  Vary i parameters
 alter =  [
 %    33 1e-7;
@@ -53,11 +68,12 @@ end
 % Vary n parameters
 alter =       [
 %     1 3e-5;
+     2 3e-5; 
 %     %3 2e-6;
-     72 3e-8; 
+     72 2e-8; 
 %    4 16;
-     5 .3;
-     6 .4; %txn e
+      5 0.6;
+%      6 .4; %txn e
 %     73 .1;
 
 
@@ -67,19 +83,6 @@ if ~isempty(alter)
     id.inputvPid = alter(:,1)';
     id.inputvP  = alter(:,2)';
 end
-
-
-dose = exp051916.dose ; %ng/ml 
-
-id.output = {'IkBa','IkBaNFkB','IkBan','IkBaNFkBn',...
-    'IkBb','IkBbNFkB','IkBbn','IkBbNFkBn',...
-    'IkBe','IkBeNFkB','IkBen','IkBeNFkBn',...
-    'IkBd','IkBdNFkB','IkBdn','IkBdNFkBn'...
-    'NFkBn','IKK','a20','IkBat','TNF','IkBbt',...
-    'IkBet','IkBdt','IkBaNFkBn','IkBdNFkBn',...
-    'IKK_off','IKK_i'}; % output names are in getInit.m
-id.DT = 0.05; 
-id.sim_time = exp051916.tps(end);
 
 
 % Simulate
@@ -151,9 +154,49 @@ for i = 1:4
     set(gca,'xtick',0:120:1440,'xticklabel',(0:120:1440)/60)
     xlabel('Time (h)');ylabel('fold')
 end
-print('./figs/exp051916_ctxnD_itxnBE.png','-dpng')
+print('./figs/exp051916_ctxnBD_itxnB.png','-dpng')
 
 %% manual calibrations 
-% 1. ikba induction is too high 
+exp051916.cell3t3 = [1	1	1	1;
+0.489519	2.189691	0.632133	0.72751;
+0.313347	1.597937	0.40528	0.414659];
+
+exp051916.cellL929= [0.980126	0.086051	3.090534	0.70973;
+0.718608	1.185377	2.20904	3.530341;
+0.5074	1.120648	1.703042	3.399037]; %rep2 
+
+exp051916.cellcmp.time = [0 16 24]; 
+exp051916.cellcmp.species= {'IkBa',  'p100','IkBbeta' , 'IkBeps' };
+
+
+for i = 1:exp051916.species_unique_no
+subplot(2,2,i)
+idx =find(strcmp(exp051916.cellcmp.species,exp051916.species_unique{i})) ;
+plot(exp051916.cellcmp.time,exp051916.cellL929(:,idx) ,'^-','linewidth',1.5,...
+    'color',[0,191,255]/255)
+
+hold on 
+if(i==3)
+    idx2 =find(strcmp(exp051916.species,exp051916.species_unique{i})) ;
+    plot(exp051916.cellcmp.time,exp051916.tc_data([1,end-1,end],idx2(1)) ,'o-','linewidth',1.5,...
+        'color',[30, 144, 255]/255)
+end
+
+plot(exp051916.cellcmp.time,exp051916.cell3t3(:,idx) ,'^-','linewidth',1.5,...
+    'color',[171,130,255]/255) % Mediumpurple1
+if(i==1)
+    legend({'L929rep2','3T3'})
+end
+
+if(i==3)
+    legend({'L929rep1','L929rep2','3T3'},'location','best')
+end
+
+title(exp051916.species_unique{i})
+set(gca,'xtick',exp051916.cellcmp.time)
+xlabel('Time (h)');ylabel('fold') 
+end
+print('./figs/exp051916_cellcmp.png','-dpng')
+
 
 
