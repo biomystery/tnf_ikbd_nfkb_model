@@ -24,7 +24,7 @@
 - 4 to 6 hour recovered in data but 2 hr only in simulation 
 
 4. p100
-- dynamics not match 
+- dynamics not match (first 8hr dynamics not match) 
 ** data: gradually increase to the platau; sim: 4hr reached a plateau but keeps up again at 16 hour and then decrease) 
 
 - first 2hour match 
@@ -33,9 +33,12 @@
 
 - very weak inducibility (0.025 vs. 8 -ikba; similar to IkBb) 
 
-4a.  why p100 two steps and dropped down 
-- three phases accumulation (fast, slow, fast) 
+
+4a. Understand p100 dynamics(why p100 two steps and dropped down) 
+- p100 should not be controlled by canonical IKK and why initially a drop?
+- three phases accumulation (fast, slow, fast) > why ???
 - last phase 8hr t1/2 decreasing (probably due to protein decay) 
+
 
 - its dynamics is slow 
 *** 6 hour mRNA half-life (beta about 4.5hr, ikbet  3hr, ikbat 20 mins) 
@@ -43,7 +46,7 @@
 
 
 - delayed 90 mins in Txn 
-
+** rapidly recovered in first 2hours, (not delayed) 
 
 # compare L929 cell vs 3T3 cells 
 1. IkBb basal is 3 fold higher in L, 

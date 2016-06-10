@@ -256,7 +256,7 @@ flux_rsu_d         = v.NP(72) ;
 flux_rsr_an        = v.NP(4)   * (delayed_nfkbn_a ^ v.NP(7)) ;
 flux_rsr_bn        = v.NP(5)   * (delayed_nfkbn_b ^ v.NP(8)) ;
 flux_rsr_en        = v.NP(6)   * (delayed_nfkbn_e ^ v.NP(9)) ;
-flux_rsr_dn        = v.NP(73)   * (delayed_nfkbn_d ^ v.NP(74)) ;
+flux_rsr_dn        = v.NP(73)  * (delayed_nfkbn_d ^ v.NP(74)) ;
 
 flux_rd_a          = v.NP(13)  * IkBat	;
 flux_rd_b          = v.NP(14)  * IkBbt	;
@@ -331,12 +331,12 @@ flux_d_n_en        = v.NP(56)	* IkBeNFkBn	;
 flux_d_n_dn        = v.NP(89)	* IkBdNFkBn	;
 
 % IKK Mediated IkB Degradation (free and bound)
-flux_ph_c_a        = v.NP(57)  * IkBa * IKK_flux ;
+flux_ph_c_a        = v.NP(57)   * IkBa * IKK_flux ;
 flux_ph_c_b        = v.NP(58)	* IkBb * IKK_flux ;
 flux_ph_c_e        = v.NP(59)	* IkBe * IKK_flux ;
 flux_ph_c_d        = v.NP(90)	* IkBd * IKK1_flux ;
 
-flux_ph_c_an       = v.NP(60)  * IkBaNFkB * IKK_flux ;
+flux_ph_c_an       = v.NP(60)   * IkBaNFkB * IKK_flux ;
 flux_ph_c_bn       = v.NP(61)	* IkBbNFkB * IKK_flux ;
 flux_ph_c_en       = v.NP(62)	* IkBeNFkB * IKK_flux ;
 flux_ph_c_dn       = v.NP(91)	* IkBdNFkB * IKK1_flux ;
@@ -352,11 +352,6 @@ flux_pd_c_a20      = v.NP(70)  * a20  ;
 if( t > v.NP(71))  % disables inducible A20 txn to match exp data
     flux_rsr_a20 = 0;
 end
-
-
-
-
-
 
 
 
@@ -429,20 +424,9 @@ delta_IkBdt     = delta_IkBdt - flux_rd_d;
 
 
 % IkB Translation
-delta_IkBat     = delta_IkBat - flux_ps_c_a;
-delta_IkBat     = delta_IkBat + flux_ps_c_a;
 delta_IkBa      = delta_IkBa  + flux_ps_c_a;
-
-delta_IkBbt     = delta_IkBbt - flux_ps_c_b;
-delta_IkBbt     = delta_IkBbt + flux_ps_c_b;
 delta_IkBb      = delta_IkBb  + flux_ps_c_b;
-
-delta_IkBet     = delta_IkBet - flux_ps_c_e;
-delta_IkBet     = delta_IkBet + flux_ps_c_e;
 delta_IkBe      = delta_IkBe  + flux_ps_c_e;
-
-delta_IkBdt     = delta_IkBdt - flux_ps_c_d;
-delta_IkBdt     = delta_IkBdt + flux_ps_c_d;
 delta_IkBd      = delta_IkBd  + flux_ps_c_d;
 
 % IkB:NFkB Shuttling (Free and Bound)

@@ -26,12 +26,16 @@ title(exp051916.species_unique{i})
 set(gca,'xtick',0:120:1440,'xticklabel',(0:120:1440)/60)
 xlabel('Time (h)');ylabel('fold') 
 end
-print('./figs/exp051916.png','-dpng')
+%print('./figs/exp051916.png','-dpng')
 
 %% simulate once
 id = struct;
 %  Vary i parameters
-alter =  [...
+alter =  [
+%    33 1e-7;
+%    35 1000; 
+%    36 1e-5; 
+%    37 0.1; 
  ];
 if ~isempty(alter)
     id.inputPid = alter(:,1)';
@@ -40,17 +44,20 @@ end
 
 % Vary n parameters
 alter =       [
-    1 3e-4;
-    3 2e-6;
-    5 0.1;
-    6 .2;
-    35 0.018; 
-    38 0.018;
+    1 2e-5;
+    %3 2e-6;
+    72 1.5e-8; 
+    5 1.5;
+    6 1.5; %txn e
+    %73 .05;% .025
+    %35 0.018; 
+    %38 0.018; %deg e
+ %   68 0 ; % a20 tln rate 
     %72 2e-7;
     %12 90;
     %4 0.8; 
     %10 0;
-    %75 0 ;
+    %75 0 ; % ikbd txn delay
     ];
 if ~isempty(alter)
     id.inputvPid = alter(:,1)';
@@ -60,11 +67,16 @@ end
 
 dose = exp051916.dose ; %ng/ml 
 
-id.output = {'IkBa','IkBan','IkBb','IkBbn','IkBe','IkBen','IkBd','IkBdn',...
-    'NFkBn','IKK'}; % output names are in getInit.m
+id.output = {'IkBa','IkBaNFkB','IkBan','IkBaNFkBn',...
+    'IkBb','IkBbNFkB','IkBbn','IkBbNFkBn',...
+    'IkBe','IkBeNFkB','IkBen','IkBeNFkBn',...
+    'IkBd','IkBdNFkB','IkBdn','IkBdNFkBn'...
+    'NFkBn','IKK','a20','IkBat','TNF','IkBbt',...
+    'IkBet','IkBdt','IkBaNFkBn','IkBdNFkBn',...
+    'IKK_off','IKK_i'}; % output names are in getInit.m
 id.DT = 0.05; 
 id.sim_time = exp051916.tps(end);
-[n,i] = getRateParams(); % Vary "i" params with id.inputPid/inputP and "n" params with id.inputvPid/inputvP
+
 
 % Simulate
 run_id = id;
@@ -74,25 +86,52 @@ run_id.dose = dose;
 %
 sim_data = zeros(size(wt_sim,2),6);
 for i = 1:4
-    sim_data(:,i)= (wt_sim(i*2-1,:) + wt_sim(i*2,:))./(wt_sim(i*2-1,1) ...
-        + wt_sim(i*2,1));
+    tmp = (wt_sim(i*4-3,:) + wt_sim(i*4-2,:)+wt_sim(i*4-1,:)+ wt_sim(i*4,:));
+    sim_data(:,i)= tmp/tmp(1);
+    %sim_data(:,i)= (wt_sim(i*4-1,:) + wt_sim(i*4,:));
 end
 %
-sim_data(:,5:6) = wt_sim(9:10,:)';  
+sim_data(:,5:9) = wt_sim(9:13,:)';  
 
-%% plot
+% plot
+%figure('position',[ 680         415        1108         563])
 figure
-tils.species = {exp051916.species_unique{:},'NFkBn','IKK'}; 
-for i = 1:6
-    subplot(3,2,i)
+tils.species = {exp051916.species_unique{:},'NFkBn','IKK','A20','IkBs','TNF'}; 
+for i = 1:4
+    subplot(2,2,i)
     plot(0:id.DT:id.sim_time,sim_data(:,i),'r-','linewidth',1.5)
     hold on
     if (i <=4)
-        plot(0:id.DT:id.sim_time,wt_sim(i*2-1,:)/(wt_sim(i*2-1,1) + wt_sim(i*2,1)),...
-            '--','linewidth',1.5,'color',[255 204 203]/255) % cyto
-        plot(0:id.DT:id.sim_time,wt_sim(i*2,:)/(wt_sim(i*2-1,1) + wt_sim(i*2,1)),...
+        tmp = (wt_sim(i*4-3,:) + wt_sim(i*4-2,:)+wt_sim(i*4-1,:)+ wt_sim(i*4,:));
+        
+        plot(0:id.DT:id.sim_time,(wt_sim(i*4-3,:)+wt_sim(i*4-2,:))/tmp(1),...
+                       '--','linewidth',1.5,'color',[255 204 203]/255) % cyto
+        %plot(0:id.DT:id.sim_time,wt_sim(i*2-1,:),...
+
+        plot(0:id.DT:id.sim_time,(wt_sim(i*4-1,:)+wt_sim(i*4,:))/tmp(1),...
             '--','linewidth',1.5,'color',[127 63 62]/255) % nuclear
     end
+%     if(i==5) 
+%         plot(0:id.DT:id.sim_time,wt_sim(end-3:end-2,:),...
+%             '--','linewidth',1.5,'color',[127 63 62]/255) % nuclear
+%     end 
+%    
+%     if(i==6)
+%         plot(0:id.DT:id.sim_time,wt_sim(end-1,:),...
+%             'k--','linewidth',1.5) % ikk_off
+%         plot(0:id.DT:id.sim_time,wt_sim(end,:),...
+%             'b--','linewidth',1.5) % ikk_i
+%     end 
+%     if(i==8)
+%         plot(0:id.DT:id.sim_time,wt_sim(14,:),...
+%             'k--','linewidth',1.5) % ikbbt
+%         plot(0:id.DT:id.sim_time,wt_sim(15,:),...
+%             'g--','linewidth',1.5) % ikbet
+%         plot(0:id.DT:id.sim_time,wt_sim(16,:),...
+%             'b--','linewidth',1.5) % ikbdt
+% 
+%     end
+
     if(i==1)
         legend({'tot','cyto','nuclear'});
     end;
@@ -101,7 +140,7 @@ for i = 1:6
     set(gca,'xtick',0:120:1440,'xticklabel',(0:120:1440)/60)
     xlabel('Time (h)');ylabel('fold')
 end
-print('./figs/exp051916_sim_basalAE_txnBE_degE.png','-dpng')
+print('./figs/exp051916_simC_basalAD_txnBE.png','-dpng')
 
 %% manual calibrations 
 % 1. ikba induction is too high 
